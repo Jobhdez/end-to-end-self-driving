@@ -65,7 +65,7 @@ def create_angle_array(Training_Data):
 
 # img-to-numpy: Images -> Numpys
 # given an array of imgs this function returns it corresponding numpy array
-
+"""
 def img_to_numpy(Images):
     Numpys = [get_numpys_ready(img) for img in Images]
     Numpys = np.array(Numpys)
@@ -77,7 +77,7 @@ def get_numpys_ready(img):
     #images = np.resize(images, (128, 128, 3))
     images = images.astype(np.float32) / 255
     return images
-
+"""
 def get_features(folder):
     features = make_img_array(folder)
     
