@@ -55,9 +55,9 @@ def create_angle_array(Training_Data):
         angle = angle.split(",")
         angle = angle[0]
         angle_array.append(float(angle)*scipy.pi/180)
-    angle_array = np.array(angle_array)
     
-    return angle_array
+    
+    return np.array(angle_array)
 
 
 # Images is an array(ie data images)
