@@ -39,7 +39,7 @@ def make_img_array(folder):
         images.append(img)
         
         
-    return np.array(images)
+    return images
 
 # Angles is a numpy array of angles
 
