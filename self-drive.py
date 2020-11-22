@@ -82,7 +82,7 @@ def make_image_lst(folder, file_name):
     return make_list(folder, file_name, operate_on_image)
 
 def make_numpy_of_angles(folder, file_name):
-    """ given a folder(string) and a file_name(string) it makes a numpy array of angles"""
+    """ given a folder(string) and a file_name(string) it makes a numpy array of steering angles"""
 
     def operate_on_angle(line):
         """ given a line of text it extracts one column(ie the angle) and assigns it to "angle" """
@@ -107,8 +107,8 @@ def preprocess_images(list_of_images):
 folder = '/home/square93/Downloads/driving_dataset/driving_dataset2'
 file_name = os.path.join(folder, 'data2.txt')
                     
-# here, get_datasets consumes two functions: "preprocess_images" and "make_angle_arrays"; the former
-# retuns a numpy array of a list of preprocessed images and the latter returns and a numpy array of angles
+# here, get_datasets consumes two functions: "preprocess_images" and "make_numpy_of_angles"; the former
+# retuns a numpy array of a list of preprocessed images and the latter returns and a numpy array of steering angles
 train_x, train_y, test_x, test_y = get_datasets(preprocess_images
                                                 (make_image_lst(folder, file_name)),
                                                 make_numpy_of_angles(folder, file_name))
