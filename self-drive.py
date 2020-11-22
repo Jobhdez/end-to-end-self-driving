@@ -48,6 +48,7 @@ def get_datasets(images, angles):
     """given a numpy array of images and a numpy array of angles make
 training and testing dataset"""
     split = .8
+    length_of_img_list = 1001
     split_index = int(split * length_of_img_list)
     
     train_x = images[:split_index]
@@ -57,7 +58,6 @@ training and testing dataset"""
 
     return np.array(train_x), np.array(train_y), np.array(test_x), np.array(test_y)
 
-length_of_img_list = 0 # global variable defined with final value in the below function
 def make_image_list(folder, file_name):
     """given a string denoting a  folder and a string denoting a file_name make a list
 of image paths(eg "folder/path.jpg")"""
@@ -67,12 +67,9 @@ of image paths(eg "folder/path.jpg")"""
             path = line.strip().split()[0]
             image_path = os.path.join(folder, path)
             images.append(image_path)
-            
-    global length_of_img_list
-    length_of_img_list = len(images)
     
     return images
-
+print(len(make_image_list(folder, file_name)))
 def make_angles_numpy(folder, file_name):
     """given a string denoted as folder and a string denoted as file_name make a numpy
 array of list of angles"""
@@ -106,10 +103,6 @@ train_and_save_model(train_x,
                      train_y,
                      test_x,
                      test_y)
-                    
-            
-
-    
     
 
 
