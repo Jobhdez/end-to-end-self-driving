@@ -122,7 +122,7 @@ train_and_save_model(train_x,
 model = load_model('autodrive2.h5')
 predict_training = model.predict(train_x)
 print("\nTraining RMSE\n")
-print(np.sqrt(mean_squared_error(y_train, predict_training)))
+print(np.sqrt(mean_squared_error(train_y, predict_training)))
 print("\nTesting RMSE\n")
 predict_testing = model.predict(test_x)
 print(np.sqrt(mean_squared_error(test_y, predict_testing)))
