@@ -70,10 +70,10 @@ the function is applied to each line of the textfile"""
     return [function(line) for line in islice(open(file_name), None)]
 
 def make_image_lst(folder, file_name):
-    """ uses "make_list" to make a list of image paths"""
+    """ "make_image_lst" uses "make_list" to make a list of image paths"""
 
     def operate_on_image(line):
-        """ given a line of text it extracts the image-name and then joins the string "folder" with the image-name"""
+        """ given a line of text "operate_on_image" extracts the image-name and then joins the string "folder" with the image-name"""
         path = line.strip().split()[0] 
         image_path = os.path.join(folder, path)
         
@@ -82,10 +82,10 @@ def make_image_lst(folder, file_name):
     return make_list(folder, file_name, operate_on_image)
 
 def make_numpy_of_angles(folder, file_name):
-    """ given a folder(string) and a file_name(string) it makes a numpy array of steering angles"""
+    """ given a folder(string) and a file_name(string) "make_numpy_of_angles" makes a numpy array of steering angles"""
 
     def operate_on_angle(line):
-        """ given a line of text it extracts one column(ie the angle) and assigns it to "angle" """
+        """ given a line of text "operate_on_angle" extracts one column(ie the angle) and assigns it to "angle" """
         angle = line.strip().split()[1].split(",")[0]
         angle = float(angle) * scipy.pi/180
 
@@ -95,7 +95,7 @@ def make_numpy_of_angles(folder, file_name):
         
 
 def preprocess_images(list_of_images):
-    """given a list consisting of image paths return a numpy array of preprocessed images"""
+    """given a list consisting of image paths "preprocess_images" return a numpy array of preprocessed images"""
     def preprocess(img):
         image = cv2.imread(img).astype(np.uint8)[:,:,::-1]
         image = image.astype(np.float32) / 255
