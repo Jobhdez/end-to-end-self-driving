@@ -49,7 +49,7 @@ def make_model(in_shape=[256, 455, 3], out_shape=1):
 
 
 def get_datasets(images, angles):
-    """given a numpy array of images and a numpy array of angles make
+    """given a numpy array of images and a numpy array of angles "get_datasets" makes a
 training and testing dataset"""
     split = .8
     length_of_img_list = 1001
