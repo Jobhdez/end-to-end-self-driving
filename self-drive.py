@@ -16,7 +16,6 @@ from math import sqrt
 import numpy as np
 import cv2
 
-
 def train_and_save_model(train_x, train_y, test_x, test_y):
 
     print("\nMaking Model\n")
@@ -28,7 +27,6 @@ def train_and_save_model(train_x, train_y, test_x, test_y):
 
     print("\nSaving Model\n")
     model.save('autodrive3-1.h5')
-
 
 
 def make_model(in_shape=[256, 455, 3], out_shape=1):
