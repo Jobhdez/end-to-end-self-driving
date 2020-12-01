@@ -23,11 +23,11 @@ def train_and_save_model(train_x, train_y, test_x, test_y):
     model = make_model()
     
     print("\nTraining Model\n")
-    model.fit(train_x, train_y, epochs=100, batch_size=75,
+    model.fit(train_x, train_y, epochs=100, batch_size=16,
               validation_data=(test_x, test_y), verbose=0)
 
     print("\nSaving Model\n")
-    model.save('autodrive3.h5')
+    model.save('autodrive3-1.h5')
 
 
 
@@ -40,10 +40,8 @@ def make_model(in_shape=[256, 455, 3], out_shape=1):
 
     flat1 = Flatten()(model.layers[-1].output)
     FC1 = Dense(1024, activation='relu', kernel_initializer='he_uniform')(flat1)
-    dropout1 = Dropout(.5)(FC1)
-    FC2 = Dense(64, activation='relu')(dropout1)
-    dropout2 = Dropout(.5)(FC2)
-    output = Dense(out_shape, activation='relu')(dropout2)
+    FC2 = Dense(64, activation='relu')(FC1)
+    output = Dense(out_shape)(FC2)
 
     model = Model(inputs=model.inputs, outputs=output)
 
@@ -52,14 +50,14 @@ def make_model(in_shape=[256, 455, 3], out_shape=1):
 
     return model
 
-split, data_size = .8, 1001
+split, data_size = .8, 5001
 def get_data(images, angles, split, data_size):
     """ "get_data" consumes a numpy array of images, numpy array of steering angles and returns numpy arrays:
 train_x, train_y, test_x, and test_y respectively """
 
     def get_index(split, data_size): return int(split * data_size)
 
-    return np.array(images[:get_index(split, data_size)]), np.array(angles[:get_index(split, data_size)]), np.array(images[get_index(split, daata_size):]), np.array(angles[get_index(split, data_size):])    
+    return np.array(images[:get_index(split, data_size)]), np.array(angles[:get_index(split, data_size)]), np.array(images[get_index(split, data_size):]), np.array(angles[get_index(split, data_size):])    
 
 def make_list(folder, file_name, function):
     """ consumes a string denoted as "folder", a string denoted as "file_name" and a function;
@@ -102,31 +100,22 @@ def preprocess_images(list_of_images):
 
     return np.array([preprocess(img) for _, img in enumerate(list_of_images)])
 
-folder = '/home/square93/Downloads/driving_dataset/driving_dataset2'
-file_name = os.path.join(folder, 'data2.txt')
+folder = '/home/square93/Downloads/driving_dataset/driving5000'
+file_name = os.path.join(folder, 'data.txt')
                     
 # here, get_datasets consumes two functions: "preprocess_images" and "make_angle_arrays"; the former
 # retuns a numpy array of a list of preprocessed images and the latter returns and a numpy array of angles
+
 train_x, train_y, test_x, test_y = get_data(preprocess_images (make_image_lst(folder, file_name)),
                                             make_numpy_of_angles(folder, file_name),
                                             split,  
                                             data_size) 
                                             
-
 # run the model and save it
 train_and_save_model(train_x,
                      train_y,
                      test_x,
                      test_y)
-                    
-     
-model = load_model('autodrive3.h5')
-predict_training = model.predict(train_x)
-print("\nTraining RMSE\n")
-print(np.sqrt(mean_squared_error(train_y, predict_training)))
-print("\nTesting RMSE\n")
-predict_testing = model.predict(test_x)
-print(np.sqrt(mean_squared_error(test_y, predict_testing)))
 
 
     
