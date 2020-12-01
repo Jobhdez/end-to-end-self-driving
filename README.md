@@ -12,9 +12,10 @@ I was inspired by this [project](https://github.com/mankadronit/SelfDrivingCar).
 You can get the dataset [here](https://github.com/SullyChen/driving-datasets).
 
 ## Performance 
-RMSE values for Model 1(ie SGD optimizer): training data: 1.66. testing_data: 2.49
+RMSE values for Model 1(ie SGD optimizer): ```training data: 1.66; testing_data: 2.49```
 
-RMSE values for Model2(ie ADAM optimizer): todo
+RMSE values for Model 2: ```training: .042; testing: .732```
+- used ADAM as an optimizer, added another Dense layer, and the model was trained with 5000 images and their respective steering angles
 
 Based on this [article](http://cs229.stanford.edu/proj2016/report/BoutonHeyse-End-to-endDrivingControlsPredictionsFromImages.pdf) I may be able to
 improve the performance of the model by using ADAM as an optimizer and PReLU as an activation function. 
