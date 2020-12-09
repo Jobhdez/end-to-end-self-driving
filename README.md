@@ -3,7 +3,7 @@
 a neural network that maps images to steering angles, inspired by Nvidia's [paper](https://arxiv.org/pdf/1604.07316v1.pdf) and open source software.
 
 ## Model
-I have trained a transfer model on 5,000 images and their corresponding steering angles; it may work on bigger datasets.
+I have trained a transfer model on 10,000 images and their corresponding steering angles; it works on bigger datasets.
 
 
 ## Thanks
