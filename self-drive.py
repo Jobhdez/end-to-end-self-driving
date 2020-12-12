@@ -11,8 +11,10 @@ from keras.layers import Flatten
 from keras.layers import Dropout
 from keras.applications.vgg16 import VGG16
 from keras.models import Model
+from sklearn.metrics import mean_squared_error
+from math import sqrt
 
-def train_and_save_model():
+def train_and_save_model(train_generator, val_generator):
 
     print("\nMaking Model\n")
     model = make_model()
@@ -42,45 +44,63 @@ def make_model(in_shape=[256, 455, 3], out_shape=1):
 
     return model
 
-dataframe = pd.read_csv("/home/square93/Downloads/driving_dataset/data2.csv",
-                        sep=r'\s*,\s*',
-                        na_values=['NA', '?'])
+def get_dataframe(file_name):
 
-dataframe['filename']= dataframe["id"].astype(str)
+    return pd.read_csv(file_name,sep=r'\s*,\s*', na_values=['NA', '?'])
 
-split = 0.8
-index = int(len(dataframe) * split)
+def create_filename_column(dataframe):
 
-df_train = dataframe[0:index]
-df_validate = dataframe[index:]
+    dataframe['filename'] = dataframe["id"].astype(str)
+
+    return dataframe
+
+def get_datasets(dataframe, split):
+
+    def get_index():
+        return int(len(dataframe) * split)
+
+    return dataframe[0:get_index()], dataframe[get_index():]
+
+def get_training_datagen(generator, training, img_directory, targetsize, batchsize):
+
+    return generator.flow_from_dataframe(dataframe=training,
+                                         directory=img_directory,
+                                         x_col="filename",
+                                         y_col="steering_angle",
+                                         target_size=targetsize,
+                                         batch_size=batchsize,
+                                         class_mode='other')
+def get_validation_datagen(generator, validation, img_directory, targetsize):
+
+    return generator.flow_from_dataframe(dataframe=validation,
+                                         directory=img_directory,
+                                         x_col="filename",                                         y_col="steering_angle",
+                                         target_size=targetsize,
+                                         class_mode='other')
+
+    
+
+
 
 
 images_directory = "/home/square93/Downloads/driving_dataset/data10k"
+file_name = "/home/square93/Downloads/driving_dataset/data2.csv"
 
 training_datagen = ImageDataGenerator(rescale = 1./255,
                                       fill_mode='nearest')
 
-train_generator = training_datagen.flow_from_dataframe(dataframe=df_train,
-                                                       directory=images_directory,
-                                                       x_col="filename",
-                                                       y_col="steering_angle",
-                                                       target_size=(256, 455),
-                                                       batch_size=32,
-                                                       class_mode='other')
 validation_datagen = ImageDataGenerator(rescale=1./255)
 
-val_generator = validation_datagen.flow_from_dataframe(dataframe=df_validate,
-                                                       directory=images_directory,
-                                                       x_col="filename",
-                                                       y_col="steering_angle",
-                                                       target_size=(256, 455),
-                                                       class_mode='other')
+dataframe = create_filename_column(get_dataframe(file_name))
 
+split = 0.8
+training, validation = get_datasets(dataframe, split)
 
+train_generator = get_training_datagen(training_datagen, training, images_directory, (256, 455), 32)
+val_generator = get_validation_datagen(validation_datagen, validation, images_directory, (256, 455))
 
-    
+train_and_save_model(train_generator, val_generator)
 
-        
         
 
 
