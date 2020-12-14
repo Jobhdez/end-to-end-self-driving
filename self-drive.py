@@ -11,8 +11,6 @@ from keras.layers import Flatten
 from keras.layers import Dropout
 from keras.applications.vgg16 import VGG16
 from keras.models import Model
-from sklearn.metrics import mean_squared_error
-from math import sqrt
 
 def train_and_save_model(train_generator, val_generator):
 
