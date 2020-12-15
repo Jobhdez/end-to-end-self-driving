@@ -11,8 +11,6 @@ from keras.layers import Flatten
 from keras.layers import Dropout
 from keras.applications.vgg16 import VGG16
 from keras.models import Model
-from sklearn.metrics import mean_squared_error
-from math import sqrt
 
 def run_model(imgs_directory, file_name):
 
@@ -43,8 +41,6 @@ def train_and_save_model(train_generator, val_generator):
     model.fit(train_generator, verbose = 1, validation_data=val_generator, epochs=100)
     print("\nSaving Model\n")
     model.save('autodrive45k.h5')
-
-    
 
 def make_model(in_shape=[256, 455, 3], out_shape=1):
 
