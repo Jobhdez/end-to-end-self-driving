@@ -20,7 +20,7 @@ def train_and_save_model(train_generator, val_generator):
     print("\nTraining Model\n")
     model.fit(train_generator, verbose = 1, validation_data=val_generator, epochs=100)
     print("\nSaving Model\n")
-    model.save('autodrive45k.h5')
+    model.save('autodrive10k.h5')
 
     
 
@@ -68,11 +68,13 @@ def get_training_datagen(generator, training, img_directory, targetsize, batchsi
                                          target_size=targetsize,
                                          batch_size=batchsize,
                                          class_mode='other')
+
 def get_validation_datagen(generator, validation, img_directory, targetsize):
 
     return generator.flow_from_dataframe(dataframe=validation,
                                          directory=img_directory,
-                                         x_col="filename",                                         y_col="steering_angle",
+                                         x_col="filename", 
+                                         y_col="steering_angle",
                                          target_size=targetsize,
                                          class_mode='other')
 
